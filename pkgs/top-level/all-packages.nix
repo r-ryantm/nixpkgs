@@ -6191,7 +6191,7 @@ let
      cross_renaming: we should make all programs use pkgconfig as
      nativeBuildInput after the renaming.
      */
-  pkgconfig = forceNativeDrv (callPackage ../development/toolsa/misc/pkgconfig {
+  pkgconfig = forceNativeDrv (callPackage ../development/tools/misc/pkgconfig {
     fetchurl = fetchurlBoot;
   });
   pkgconfigUpstream = lowPrio (pkgconfig.override { vanilla = true; });
