@@ -1546,6 +1546,8 @@ let
       protobuf = protobuf.override { stdenv = clangStdenv; };
     };
 
+    sunpinyin  = callPackage ../tools/inputmethods/fcitx-engines/fcitx-sunpinyin { };
+
     table-other = callPackage ../tools/inputmethods/fcitx-engines/fcitx-table-other { };
 
   };
@@ -3345,6 +3347,8 @@ let
   suidChroot = callPackage ../tools/system/suid-chroot { };
 
   sundtek = callPackage ../misc/drivers/sundtek { };
+
+  sunpinyin = callPackage ../tools/inputmethods/sunpinyin { };
 
   sunxi-tools = callPackage ../development/tools/sunxi-tools { };
 
@@ -6187,7 +6191,7 @@ let
      cross_renaming: we should make all programs use pkgconfig as
      nativeBuildInput after the renaming.
      */
-  pkgconfig = forceNativeDrv (callPackage ../development/tools/misc/pkgconfig {
+  pkgconfig = forceNativeDrv (callPackage ../development/toolsa/misc/pkgconfig {
     fetchurl = fetchurlBoot;
   });
   pkgconfigUpstream = lowPrio (pkgconfig.override { vanilla = true; });
