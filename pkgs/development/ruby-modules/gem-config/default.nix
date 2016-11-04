@@ -79,7 +79,7 @@ in
   };
 
   # note that you need version >= v3.16.14.8,
-  # otherwise the gem will fail to link to the libv8 binary.
+  # otherwise the gem will fail to link to the l binary.
   # see: https://github.com/cowboyd/libv8/pull/161
   libv8 = attrs: {
     buildInputs = [ which v8 python ];
@@ -90,6 +90,10 @@ in
     buildInputs = [ libmsgpack ];
   };
 
+  mysql = attrs: {
+    buildInputs = [ mysql.lib zlib openssl ];
+  };
+  
   mysql2 = attrs: {
     buildInputs = [ mysql.lib zlib openssl ];
   };
