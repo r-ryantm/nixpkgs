@@ -8714,6 +8714,7 @@ with pkgs;
 
   hyena = callPackage ../development/libraries/hyena { };
 
+  icu57 = callPackage ../development/libraries/icu/57.nix { };
   icu58 = callPackage ../development/libraries/icu/58.nix { };
   icu59 = callPackage ../development/libraries/icu/59.nix { };
 
@@ -17933,6 +17934,7 @@ with pkgs;
 
   minecraft = callPackage ../games/minecraft {
     inherit (gnome2) GConf;
+    icu = icu57;
   };
 
   minecraft-server = callPackage ../games/minecraft-server { };
