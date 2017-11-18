@@ -1,6 +1,6 @@
 { stdenv, fetchurl, makeDesktopItem, makeWrapper
 , libX11, libXext, libXcursor, libXrandr, libXcomposite, libXdamage, libXfixes
-, libXi, libXrender, libXScrnSaver, libXtst, gtk2, gdk_pixbuf
+, libXi, libXrender, libXScrnSaver, libXtst, libcef, gtk2, gdk_pixbuf
 , gcc6, icu, freetype, GConf, libpulseaudio, alsaLib, cups, dbus, atk
 , glib, fontconfig, nss, pango, cairo, expat, nspr, pciutils
 , jre
@@ -19,16 +19,16 @@ let
     categories = "Game;";
   };
   deps = [ libX11 libXext libXcursor libXrandr libXcomposite libXdamage libXfixes
-    libXi libXrender libXScrnSaver libXtst gtk2 gdk_pixbuf
+    libXi libXrender libXScrnSaver libXtst libcef gtk2 gdk_pixbuf
     gcc6.cc icu freetype GConf libpulseaudio alsaLib cups dbus atk
     glib fontconfig nss pango cairo expat nspr pciutils ];
 
 in stdenv.mkDerivation {
-  name = "minecraft-2.0.759"; #launcher version
+  name = "minecraft-2.0.579"; #launcher version
 
   src = fetchurl {
-    url = "https://launcher.mojang.com/mc-staging/download/Minecraft_staging.tar.gz";
-    sha256 = "0d4g122as9c297jfh4fn69nvqva6kfrf16xwsg199ligv7cplzrg";
+    url = "https://launcher.mojang.com/mc-staging/launcher/linux/5f8adda8401888c37be5e3c91b2f369fea3bacf2/x86_64/minecraft-launcher-2.0.579.tar.gz";
+    sha256 = "08xm0jx116fv6kp4g7lqqvnsgcsfxjjkvkibmfk9cc3yxfkvldrz";
   };
 
   nativeBuildInputs = [ makeWrapper ];
@@ -53,9 +53,14 @@ in stdenv.mkDerivation {
       --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
       $out/share/minecraft/chrome-sandbox
 
-    wrapProgram $out/share/minecraft/launcher \
-      --prefix LD_LIBRARY_PATH : "${makeLibraryPath deps}" \
-      --prefix PATH : "${jre}/bin"
+    patchelf \
+      --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
+      --set-rpath "${makeLibraryPath deps}" \
+      $out/share/minecraft/launcher
+
+    # wrapProgram $out/share/minecraft/launcher \
+    #   --prefix LD_LIBRARY_PATH : "${makeLibraryPath deps}" \
+    #   --prefix PATH : "${jre}/bin"
 
     mkdir -pv $out/bin
     ln -s $out/share/minecraft/minecraft-launcher.sh $out/bin/minecraft
