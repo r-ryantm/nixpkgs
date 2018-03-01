@@ -403,6 +403,14 @@ rec {
       name = builtins.head (splitString sep filename);
     in assert name !=  filename; name;
 
+  /* Get the first two parts (major and minor) of a version.
+
+     Example:
+       majorMinorVersion "1.2.3"
+       => "1.2"
+  */
+  majorMinorVersion = v: builtins.concatStringsSep "." (lib.lists.take 2 (splitString "." v));
+
   /* Create an --{enable,disable}-<feat> string that can be passed to
      standard GNU Autoconf scripts.
 

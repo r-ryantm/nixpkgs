@@ -83,8 +83,8 @@ let
       escapeShellArg escapeShellArgs replaceChars lowerChars upperChars
       toLower toUpper addContextFrom splitString removePrefix
       removeSuffix versionOlder versionAtLeast getVersion nameFromURL
-      enableFeature fixedWidthString fixedWidthNumber isStorePath
-      toInt readPathsFromFile fileContents;
+      majorMinorVersion enableFeature fixedWidthString fixedWidthNumber
+      isStorePath toInt readPathsFromFile fileContents;
     inherit (stringsWithDeps) textClosureList textClosureMap
       noDepEntry fullDepEntry packEntry stringAfter;
     inherit (customisation) overrideDerivation makeOverridable
