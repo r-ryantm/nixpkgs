@@ -16343,6 +16343,8 @@ with pkgs;
 
   leo-editor = callPackage ../applications/editors/leo-editor { };
 
+  linode-letsencrypt-dns01-hooks = callPackage ../tools/admin/linode-letsencrypt-dns01-hooks { };
+
   libowfat = callPackage ../development/libraries/libowfat { };
 
   librecad = callPackage ../applications/misc/librecad { };
