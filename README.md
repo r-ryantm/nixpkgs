@@ -96,14 +96,14 @@ nonprofit organization, the [NixOS
 Foundation](https://nixos.org/nixos/foundation.html). To ensure the
 continuity and expansion of the NixOS infrastructure, we are looking
 for donations to our organization.
+You can donate to the NixOS foundation by using Op
+en Collective:
+
+<a href="https://opencollective.com/nixos#support"><img src="https://opencollective.com/nixos/tiers/supporter.svg?width=890" /></a>
 
 # Sponsors: 
 
 - [Paypal](https://www.paypal.com/donate?business=RBHMVN4AQGQE2&item_name=Donation&currency_code=BRL)
-
-Or You can donate to the NixOS foundation by using Open Collective:
-
-<a href="https://opencollective.com/nixos#support"><img src="https://opencollective.com/nixos/tiers/supporter.svg?width=890" /></a>
 
 # License
 
