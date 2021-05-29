@@ -99,7 +99,7 @@ for donations to our organization.
 
 # Sponsors: 
 
-- [Paypal](https://www.paypal.com/donate?business=RBHMVN4AQGQE2&item_name=Donation&currency_code=BRL
+- [Paypal](https://www.paypal.com/donate?business=RBHMVN4AQGQE2&item_name=Donation&currency_code=BRL)
 
 Or You can donate to the NixOS foundation by using Open Collective:
 
