@@ -1584,6 +1584,8 @@ in {
 
   coronavirus = callPackage ../development/python-modules/coronavirus { };
 
+  corsair-scan = callPackage ../development/python-modules/corsair-scan { };
+
   cot = callPackage ../development/python-modules/cot { };
 
   covCore = callPackage ../development/python-modules/cov-core { };
@@ -5239,6 +5241,8 @@ in {
 
   powerline = callPackage ../development/python-modules/powerline { };
 
+  powerlineMemSegment = callPackage ../development/python-modules/powerline-mem-segment { };
+
   pox = callPackage ../development/python-modules/pox { };
 
   poyo = callPackage ../development/python-modules/poyo { };
@@ -8477,6 +8481,8 @@ in {
   };
 
   typed-ast = callPackage ../development/python-modules/typed-ast { };
+
+  typed-settings = callPackage ../development/python-modules/typed-settings { };
 
   typeguard = callPackage ../development/python-modules/typeguard { };
 
