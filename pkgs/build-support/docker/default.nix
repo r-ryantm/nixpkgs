@@ -90,6 +90,8 @@ rec {
     , finalImageName ? imageName
       # This used to set a tag to the pulled image
     , finalImageTag ? "latest"
+      # This is used to disable TLS certificate verification, allowing access to http registries on (hopefully) trusted networks
+    , tlsVerify ? true
 
     , name ? fixName "docker-image-${finalImageName}-${finalImageTag}.tar"
     }:
@@ -109,7 +111,13 @@ rec {
       sourceURL = "docker://${imageName}@${imageDigest}";
       destNameTag = "${finalImageName}:${finalImageTag}";
     } ''
-      skopeo --insecure-policy --tmpdir=$TMPDIR --override-os ${os} --override-arch ${arch} copy "$sourceURL" "docker-archive://$out:$destNameTag"
+      skopeo \
+        --src-tls-verify=${lib.boolToString tlsVerify} \
+        --insecure-policy \
+        --tmpdir=$TMPDIR \
+        --override-os ${os} \
+        --override-arch ${arch} \
+        copy "$sourceURL" "docker-archive://$out:$destNameTag"
     '';
 
   # We need to sum layer.tar, not a directory, hence tarsum instead of nix-hash.
@@ -536,7 +544,7 @@ rec {
         passthru.layer = layer;
         passthru.imageTag =
           if tag != null
-            then lib.toLower tag
+            then tag
             else
               lib.head (lib.strings.splitString "-" (baseNameOf result.outPath));
         # Docker can't be made to run darwin binaries

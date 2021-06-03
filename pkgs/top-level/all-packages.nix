@@ -786,7 +786,7 @@ in
 
   aescrypt = callPackage ../tools/misc/aescrypt { };
 
-  acme-client = callPackage ../tools/networking/acme-client { inherit (darwin) apple_sdk; stdenv = gccStdenv; };
+  acme-client = callPackage ../tools/networking/acme-client { stdenv = gccStdenv; };
 
   amass = callPackage ../tools/networking/amass { };
 
@@ -859,6 +859,8 @@ in
   gobgp = callPackage ../tools/networking/gobgp { };
 
   metapixel = callPackage ../tools/graphics/metapixel { };
+
+  pferd = callPackage ../tools/misc/pferd {};
 
   quich = callPackage ../tools/misc/quich { } ;
 
@@ -1038,6 +1040,10 @@ in
   amtterm = callPackage ../tools/system/amtterm {};
 
   analog = callPackage ../tools/admin/analog {};
+
+  android-tools = lowPrio (callPackage ../tools/misc/android-tools {
+    stdenv = if stdenv.targetPlatform.isAarch64 then gcc10Stdenv else stdenv;
+  });
 
   angle-grinder = callPackage ../tools/text/angle-grinder {};
 
@@ -1400,6 +1406,8 @@ in
 
   cyclonedx-python = callPackage ../tools/misc/cyclonedx-python { };
 
+  deltachat-cursed = callPackage ../applications/networking/instant-messengers/deltachat-cursed { };
+
   deltachat-electron = callPackage
     ../applications/networking/instant-messengers/deltachat-electron { };
 
@@ -1654,6 +1662,8 @@ in
   pebble = callPackage ../tools/admin/pebble { };
 
   play-with-mpv = callPackage ../tools/video/play-with-mpv { };
+
+  plausible = callPackage ../servers/web-apps/plausible { };
 
   reattach-to-user-namespace = callPackage ../os-specific/darwin/reattach-to-user-namespace {};
 
@@ -1973,6 +1983,9 @@ in
 
   boxfs = callPackage ../tools/filesystems/boxfs { };
 
+  bozohttpd = callPackage ../servers/http/bozohttpd { };
+  bozohttpd-minimal = callPackage ../servers/http/bozohttpd { minimal = true; };
+
   bpytop = callPackage ../tools/system/bpytop { };
 
   brasero-original = lowPrio (callPackage ../tools/cd-dvd/brasero { });
@@ -2013,6 +2026,8 @@ in
   buildpack = callPackage ../development/tools/buildpack { };
 
   bottom-rs = callPackage ../tools/misc/bottom-rs { };
+
+  bsp-layout = callPackage ../tools/misc/bsp-layout {};
 
   buildtorrent = callPackage ../tools/misc/buildtorrent { };
 
@@ -2381,6 +2396,8 @@ in
   dbus-broker = callPackage ../os-specific/linux/dbus-broker { };
 
   ioport = callPackage ../os-specific/linux/ioport {};
+
+  dgoss = callPackage ../tools/misc/dgoss { };
 
   diagrams-builder = callPackage ../tools/graphics/diagrams-builder {
     inherit (haskellPackages) ghcWithPackages diagrams-builder;
@@ -2831,6 +2848,8 @@ in
   kapacitor = callPackage ../servers/monitoring/kapacitor { };
 
   kaldi = callPackage ../tools/audio/kaldi { };
+
+  kalk = callPackage ../tools/misc/kalk { };
 
   kisslicer = callPackage ../tools/misc/kisslicer { };
 
@@ -5840,6 +5859,10 @@ in
 
   ipget = callPackage ../applications/networking/ipget { };
 
+  i-pi = with python3Packages; toPythonApplication i-pi;
+
+  iptsd = callPackage ../applications/misc/iptsd { };
+
   ipmitool = callPackage ../tools/system/ipmitool {};
 
   ipmiutil = callPackage ../tools/system/ipmiutil {};
@@ -6939,6 +6962,8 @@ in
 
   mt-st = callPackage ../tools/backup/mt-st {};
 
+  mubeng = callPackage ../tools/networking/mubeng { };
+
   multitime = callPackage ../tools/misc/multitime { };
 
   sta = callPackage ../tools/misc/sta {};
@@ -7157,6 +7182,14 @@ in
 
   nvchecker = with python3Packages; toPythonApplication nvchecker;
 
+  nvfetcher = with haskell.lib; overrideCabal (justStaticExecutables haskellPackages.nvfetcher) (drv: {
+    executableToolDepends = [ makeWrapper ];
+    postInstall = ''
+      wrapProgram $out/bin/nvfetcher \
+        --prefix PATH ":" "${nvchecker}/bin:${nix-prefetch-git}/bin"
+    '';
+  });
+
   miller = callPackage ../tools/text/miller { };
 
   milu = callPackage ../applications/misc/milu { };
@@ -7271,6 +7304,10 @@ in
   nuttcp = callPackage ../tools/networking/nuttcp { };
 
   nssmdns = callPackage ../tools/networking/nss-mdns { };
+
+  nvfancontrol = callPackage ../tools/misc/nvfancontrol {
+    libXNVCtrl = linuxPackages.nvidia_x11.settings.libXNVCtrl;
+  };
 
   nvimpager = callPackage ../tools/misc/nvimpager { };
 
@@ -8604,6 +8641,8 @@ in
     tex = texlive.combined.scheme-small;
   };
 
+  skytemple = callPackage ../applications/misc/skytemple {};
+
   sleuthkit = callPackage ../tools/system/sleuthkit {};
 
   # Not updated upstream since 2018, doesn't support qt newer than 5.12
@@ -9366,6 +9405,8 @@ in
   ursadb = callPackage ../servers/ursadb {};
 
   usbmuxd = callPackage ../tools/misc/usbmuxd {};
+
+  ustreamer = callPackage ../applications/video/ustreamer { };
 
   usync = callPackage ../applications/misc/usync { };
 
@@ -11386,7 +11427,7 @@ in
   llvm_5  = llvmPackages_5.llvm;
 
   llvmPackages = let
-    # This returns the minimum suported version for the platform. The
+    # This returns the minimum supported version for the platform. The
     # assumption is that or any later version is good.
     choose = platform:
       /**/ if platform.isDarwin then (if platform.isAarch64 then 11 else 7)
@@ -23983,6 +24024,8 @@ in
 
   gmu = callPackage ../applications/audio/gmu { };
 
+  gnaural = callPackage ../applications/audio/gnaural { };
+
   gnome_mplayer = callPackage ../applications/video/gnome-mplayer { };
 
   gnumeric = callPackage ../applications/office/gnumeric { };
@@ -25331,6 +25374,7 @@ in
   mutt-with-sidebar = mutt.override {
     withSidebar = true;
   };
+  mutt-wizard = callPackage ../tools/misc/mutt-wizard { };
 
   mwic = callPackage ../applications/misc/mwic {
     pythonPackages = python3Packages;
@@ -31386,6 +31430,8 @@ in
   zoneminder = callPackage ../servers/zoneminder { };
 
   zsnes = pkgsi686Linux.callPackage ../misc/emulators/zsnes { };
+
+  xcp = callPackage ../tools/misc/xcp { };
 
   xcpc = callPackage ../misc/emulators/xcpc { };
 
