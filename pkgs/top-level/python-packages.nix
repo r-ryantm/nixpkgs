@@ -1124,6 +1124,8 @@ in {
     enablePython = true;
   });
 
+  boschshcpy = callPackage ../development/python-modules/boschshcpy { };
+
   boto3 = callPackage ../development/python-modules/boto3 { };
 
   boto = callPackage ../development/python-modules/boto { };
@@ -2786,6 +2788,8 @@ in {
 
   gin-config = callPackage ../development/python-modules/gin-config { };
 
+  gios = callPackage ../development/python-modules/gios { };
+
   gipc = callPackage ../development/python-modules/gipc { };
 
   git-annex-adapter =
@@ -2797,8 +2801,9 @@ in {
 
   github3_py = callPackage ../development/python-modules/github3_py { };
 
-  github-webhook = callPackage ../development/python-modules/github-webhook { };
+  github-to-sqlite = callPackage ../development/python-modules/github-to-sqlite { };
 
+  github-webhook = callPackage ../development/python-modules/github-webhook { };
   GitPython = callPackage ../development/python-modules/GitPython { };
 
   git-revise = callPackage ../development/python-modules/git-revise { };
@@ -3016,6 +3021,8 @@ in {
 
   gremlinpython = callPackage ../development/python-modules/gremlinpython { };
 
+  growattserver = callPackage ../development/python-modules/growattserver { };
+
   grip = callPackage ../development/python-modules/grip { };
 
   grpc_google_iam_v1 = callPackage ../development/python-modules/grpc_google_iam_v1 { };
@@ -3103,7 +3110,7 @@ in {
 
   handout = callPackage ../development/python-modules/handout { };
 
-  HAP-python = callPackage ../development/python-modules/HAP-python { };
+  hap-python = callPackage ../development/python-modules/hap-python { };
 
   hass-nabucasa = callPackage ../development/python-modules/hass-nabucasa { };
 
@@ -3400,6 +3407,8 @@ in {
 
   iniparse = callPackage ../development/python-modules/iniparse { };
 
+  injector = callPackage ../development/python-modules/injector { };
+
   inotify-simple = callPackage ../development/python-modules/inotify-simple { };
 
   inquirer = callPackage ../development/python-modules/inquirer { };
@@ -3472,6 +3481,8 @@ in {
   islpy = callPackage ../development/python-modules/islpy { };
 
   iso3166 = callPackage ../development/python-modules/iso3166 { };
+
+  ismartgate = callPackage ../development/python-modules/ismartgate { };
 
   iso-639 = callPackage ../development/python-modules/iso-639 { };
 
@@ -5160,6 +5171,8 @@ in {
 
   pynndescent = callPackage ../development/python-modules/pynndescent { };
 
+  pynobo = callPackage ../development/python-modules/pynobo { };
+
   pynuki = callPackage ../development/python-modules/pynuki { };
 
   pynws = callPackage ../development/python-modules/pynws { };
@@ -6252,8 +6265,6 @@ in {
 
   pyro-ppl = callPackage ../development/python-modules/pyro-ppl { };
 
-  pyroon = callPackage ../development/python-modules/pyroon { };
-
   pyroute2 = callPackage ../development/python-modules/pyroute2 { };
 
   pyroute2-core = callPackage ../development/python-modules/pyroute2-core { };
@@ -6397,6 +6408,8 @@ in {
   pyspiflash = callPackage ../development/python-modules/pyspiflash { };
 
   pyspinel = callPackage ../development/python-modules/pyspinel { };
+
+  pyspnego = callPackage ../development/python-modules/pyspnego { };
 
   pyspotify = callPackage ../development/python-modules/pyspotify { };
 
@@ -7384,6 +7397,8 @@ in {
 
   roombapy = callPackage ../development/python-modules/roombapy { };
 
+  roonapi = callPackage ../development/python-modules/roonapi { };
+
   ronin = callPackage ../development/python-modules/ronin { };
 
   rope = callPackage ../development/python-modules/rope { };
@@ -7442,6 +7457,8 @@ in {
   ruffus = callPackage ../development/python-modules/ruffus { };
 
   runway-python = callPackage ../development/python-modules/runway-python { };
+
+  ruyaml = callPackage ../development/python-modules/ruyaml { };
 
   rx = callPackage ../development/python-modules/rx { };
 
@@ -7787,6 +7804,8 @@ in {
   smart-open = callPackage ../development/python-modules/smart-open { };
 
   smartypants = callPackage ../development/python-modules/smartypants { };
+
+  smbprotocol = callPackage ../development/python-modules/smbprotocol { };
 
   smbus-cffi = callPackage ../development/python-modules/smbus-cffi { };
 
