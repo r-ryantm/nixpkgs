@@ -2,7 +2,7 @@
 # Do not edit!
 
 {
-  version = "2021.6.3";
+  version = "2021.6.4";
   components = {
     "abode" = ps: with ps; [ abodepy ];
     "accuweather" = ps: with ps; [ accuweather ];
@@ -12,7 +12,7 @@
     "adguard" = ps: with ps; [ adguardhome ];
     "ads" = ps: with ps; [ pyads ];
     "advantage_air" = ps: with ps; [ advantage-air ];
-    "aemet" = ps: with ps; [ ]; # missing inputs: AEMET-OpenData
+    "aemet" = ps: with ps; [ aemet-opendata ];
     "aftership" = ps: with ps; [ pyaftership ];
     "agent_dvr" = ps: with ps; [ agent-py ];
     "air_quality" = ps: with ps; [ ];
@@ -42,7 +42,7 @@
     "apns" = ps: with ps; [ ]; # missing inputs: apns2
     "apple_tv" = ps: with ps; [ aiohttp-cors ifaddr netdisco pyatv zeroconf ];
     "apprise" = ps: with ps; [ apprise ];
-    "aprs" = ps: with ps; [ geopy ]; # missing inputs: aprslib
+    "aprs" = ps: with ps; [ aprslib geopy ];
     "aqualogic" = ps: with ps; [ aqualogic ];
     "aquostv" = ps: with ps; [ ]; # missing inputs: sharp_aquos_rc
     "arcam_fmj" = ps: with ps; [ ]; # missing inputs: arcam-fmj
@@ -55,7 +55,7 @@
     "asterisk_cdr" = ps: with ps; [ ]; # missing inputs: asterisk_mbox
     "asterisk_mbox" = ps: with ps; [ ]; # missing inputs: asterisk_mbox
     "asuswrt" = ps: with ps; [ aioasuswrt ];
-    "atag" = ps: with ps; [ ]; # missing inputs: pyatag
+    "atag" = ps: with ps; [ pyatag ];
     "aten_pe" = ps: with ps; [ atenpdu ];
     "atome" = ps: with ps; [ ]; # missing inputs: pyatome
     "august" = ps: with ps; [ yalexs ];
@@ -106,7 +106,7 @@
     "bsblan" = ps: with ps; [ bsblan ];
     "bt_home_hub_5" = ps: with ps; [ ]; # missing inputs: bthomehub5-devicelist
     "bt_smarthub" = ps: with ps; [ ]; # missing inputs: btsmarthub_devicelist
-    "buienradar" = ps: with ps; [ ]; # missing inputs: buienradar
+    "buienradar" = ps: with ps; [ buienradar ];
     "caldav" = ps: with ps; [ caldav ];
     "calendar" = ps: with ps; [ aiohttp-cors ];
     "camera" = ps: with ps; [ aiohttp-cors ];
@@ -265,7 +265,7 @@
     "fixer" = ps: with ps; [ fixerio ];
     "fleetgo" = ps: with ps; [ ]; # missing inputs: ritassist
     "flexit" = ps: with ps; [ pymodbus ]; # missing inputs: pyflexit
-    "flic" = ps: with ps; [ ]; # missing inputs: pyflic
+    "flic" = ps: with ps; [ pyflic ];
     "flick_electric" = ps: with ps; [ ]; # missing inputs: PyFlick
     "flo" = ps: with ps; [ aioflo ];
     "flock" = ps: with ps; [ ];
@@ -303,8 +303,8 @@
     "geo_location" = ps: with ps; [ ];
     "geo_rss_events" = ps: with ps; [ georss-generic-client ];
     "geofency" = ps: with ps; [ aiohttp-cors ];
-    "geonetnz_quakes" = ps: with ps; [ ]; # missing inputs: aio_geojson_geonetnz_quakes
-    "geonetnz_volcano" = ps: with ps; [ ]; # missing inputs: aio_geojson_geonetnz_volcano
+    "geonetnz_quakes" = ps: with ps; [ aio-geojson-geonetnz-quakes ];
+    "geonetnz_volcano" = ps: with ps; [ aio-geojson-geonetnz-volcano ];
     "gios" = ps: with ps; [ gios ];
     "github" = ps: with ps; [ PyGithub ];
     "gitlab_ci" = ps: with ps; [ python-gitlab ];
@@ -433,7 +433,7 @@
     "konnected" = ps: with ps; [ aiohttp-cors ]; # missing inputs: konnected
     "kostal_plenticore" = ps: with ps; [ ]; # missing inputs: kostal_plenticore
     "kraken" = ps: with ps; [ ]; # missing inputs: krakenex pykrakenapi
-    "kulersky" = ps: with ps; [ ]; # missing inputs: pykulersky
+    "kulersky" = ps: with ps; [ pykulersky ];
     "kwb" = ps: with ps; [ ]; # missing inputs: pykwb
     "lacrosse" = ps: with ps; [ pylacrosse ];
     "lametric" = ps: with ps; [ ]; # missing inputs: lmnotify
@@ -483,7 +483,7 @@
     "manual_mqtt" = ps: with ps; [ aiohttp-cors paho-mqtt ];
     "map" = ps: with ps; [ aiohttp-cors pillow ];
     "marytts" = ps: with ps; [ ]; # missing inputs: speak2mary
-    "mastodon" = ps: with ps; [ ]; # missing inputs: Mastodon.py
+    "mastodon" = ps: with ps; [ mastodon-py ];
     "matrix" = ps: with ps; [ matrix-client ];
     "maxcube" = ps: with ps; [ ]; # missing inputs: maxcube-api
     "mazda" = ps: with ps; [ pymazda ];
@@ -499,8 +499,8 @@
     "met" = ps: with ps; [ pymetno ];
     "met_eireann" = ps: with ps; [ pymeteireann ];
     "meteo_france" = ps: with ps; [ ]; # missing inputs: meteofrance-api
-    "meteoalarm" = ps: with ps; [ ]; # missing inputs: meteoalertapi
-    "meteoclimatic" = ps: with ps; [ ]; # missing inputs: pymeteoclimatic
+    "meteoalarm" = ps: with ps; [ meteoalertapi ];
+    "meteoclimatic" = ps: with ps; [ pymeteoclimatic ];
     "metoffice" = ps: with ps; [ ]; # missing inputs: datapoint
     "mfi" = ps: with ps; [ ]; # missing inputs: mficlient
     "mhz19" = ps: with ps; [ ]; # missing inputs: pmsensor
@@ -544,11 +544,11 @@
     "mystrom" = ps: with ps; [ aiohttp-cors python-mystrom ];
     "mythicbeastsdns" = ps: with ps; [ ]; # missing inputs: mbddns
     "nad" = ps: with ps; [ nad-receiver ];
-    "nam" = ps: with ps; [ ]; # missing inputs: nettigo-air-monitor
+    "nam" = ps: with ps; [ nettigo-air-monitor ];
     "namecheapdns" = ps: with ps; [ defusedxml ];
     "nanoleaf" = ps: with ps; [ pynanoleaf ];
     "neato" = ps: with ps; [ aiohttp-cors pybotvac ];
-    "nederlandse_spoorwegen" = ps: with ps; [ ]; # missing inputs: nsapi
+    "nederlandse_spoorwegen" = ps: with ps; [ nsapi ];
     "nello" = ps: with ps; [ ]; # missing inputs: pynello
     "ness_alarm" = ps: with ps; [ ]; # missing inputs: nessclient
     "nest" = ps: with ps; [ aiohttp-cors ha-ffmpeg python-nest ]; # missing inputs: google-nest-sdm
@@ -576,7 +576,7 @@
     "notify_events" = ps: with ps; [ ]; # missing inputs: notify-events
     "notion" = ps: with ps; [ aionotion ];
     "nsw_fuel_station" = ps: with ps; [ ]; # missing inputs: nsw-fuel-api-client
-    "nsw_rural_fire_service_feed" = ps: with ps; [ ]; # missing inputs: aio_geojson_nsw_rfs_incidents
+    "nsw_rural_fire_service_feed" = ps: with ps; [ aio-geojson-nsw-rfs-incidents ];
     "nuheat" = ps: with ps; [ ]; # missing inputs: nuheat
     "nuki" = ps: with ps; [ pynuki ];
     "numato" = ps: with ps; [ ]; # missing inputs: numato-gpio
@@ -794,7 +794,7 @@
     "spaceapi" = ps: with ps; [ aiohttp-cors ];
     "spc" = ps: with ps; [ ]; # missing inputs: pyspcwebgw
     "speedtestdotnet" = ps: with ps; [ speedtest-cli ];
-    "spider" = ps: with ps; [ ]; # missing inputs: spiderpy
+    "spider" = ps: with ps; [ spiderpy ];
     "splunk" = ps: with ps; [ ]; # missing inputs: hass_splunk
     "spotify" = ps: with ps; [ aiohttp-cors spotipy ];
     "sql" = ps: with ps; [ sqlalchemy ];
@@ -967,7 +967,7 @@
     "wunderground" = ps: with ps; [ ];
     "x10" = ps: with ps; [ ];
     "xbee" = ps: with ps; [ ]; # missing inputs: xbee-helper
-    "xbox" = ps: with ps; [ aiohttp-cors ]; # missing inputs: xbox-webapi
+    "xbox" = ps: with ps; [ aiohttp-cors xbox-webapi ];
     "xbox_live" = ps: with ps; [ xboxapi ];
     "xeoma" = ps: with ps; [ pyxeoma ];
     "xiaomi" = ps: with ps; [ ha-ffmpeg ];
