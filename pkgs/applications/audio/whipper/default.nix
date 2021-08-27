@@ -1,6 +1,7 @@
 { lib
 , python3
 , fetchFromGitHub
+, fetchpatch
 , libcdio-paranoia
 , cdrdao
 , libsndfile
@@ -22,8 +23,17 @@ in python3.pkgs.buildPythonApplication rec {
     sha256 = "00cq03cy5dyghmibsdsq5sdqv3bzkzhshsng74bpnb5lasxp3ia5";
   };
 
+  patches = [
+    (fetchpatch {
+      # Use custom YAML subclass to be compatible with ruamel_yaml>=0.17
+      # https://github.com/whipper-team/whipper/pull/543
+      url = "https://github.com/whipper-team/whipper/commit/3ce5964dfe8be1e625c3e3b091360dd0bc34a384.patch";
+      sha256 = "0n9dmib884y8syvypsg88j0h71iy42n1qsrh0am8pwna63sl15ah";
+    })
+  ];
+
   nativeBuildInputs = with python3.pkgs; [
-    setuptools_scm
+    setuptools-scm
     docutils
   ];
 

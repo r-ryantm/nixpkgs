@@ -180,7 +180,7 @@ in
       enable = mkOption {
         type = types.bool;
         default = false;
-        description = "Enable Gnome 3 desktop manager.";
+        description = "Enable GNOME desktop manager.";
       };
 
       sessionPath = mkOption {
@@ -256,6 +256,17 @@ in
           default = [];
           description = "Other GNOME Flashback sessions to enable.";
         };
+
+        panelModulePackages = mkOption {
+          default = [ pkgs.gnome.gnome-applets ];
+          type = types.listOf types.path;
+          description = ''
+            Packages containing modules that should be made available to <literal>gnome-panel</literal> (usually for applets).
+
+            If you're packaging something to use here, please install the modules in <literal>$out/lib/gnome-panel/modules</literal>.
+          '';
+          example = literalExample "[ pkgs.gnome.gnome-applets ]";
+        };
       };
     };
 
@@ -272,7 +283,7 @@ in
     (mkIf (cfg.enable || flashbackEnabled) {
       # Seed our configuration into nixos-generate-config
       system.nixos-generate-config.desktopConfiguration = [''
-        # Enable the GNOME 3 Desktop Environment.
+        # Enable the GNOME Desktop Environment.
         services.xserver.displayManager.gdm.enable = true;
         services.xserver.desktopManager.gnome.enable = true;
       ''];
@@ -318,6 +329,7 @@ in
             (wm:
               pkgs.gnome.gnome-flashback.mkSessionForWm {
                 inherit (wm) wmName wmLabel wmCommand enableGnomePanel;
+                inherit (cfg.flashback) panelModulePackages;
               }
             ) flashbackWms;
 

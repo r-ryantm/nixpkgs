@@ -6,6 +6,8 @@ let
   cfg = config.services.grafana;
   opt = options.services.grafana;
   declarativePlugins = pkgs.linkFarm "grafana-plugins" (builtins.map (pkg: { name = pkg.pname; path = pkg; }) cfg.declarativePlugins);
+  useMysql = cfg.database.type == "mysql";
+  usePostgresql = cfg.database.type == "postgres";
 
   envOptions = {
     PATHS_DATA = cfg.dataDir;
@@ -94,7 +96,7 @@ let
         description = "Name of the datasource. Required.";
       };
       type = mkOption {
-        type = types.enum ["graphite" "prometheus" "cloudwatch" "elasticsearch" "influxdb" "opentsdb" "mysql" "mssql" "postgres" "loki"];
+        type = types.str;
         description = "Datasource type. Required.";
       };
       access = mkOption {
@@ -292,7 +294,7 @@ in {
     port = mkOption {
       description = "Listening port.";
       default = 3000;
-      type = types.int;
+      type = types.port;
     };
 
     socket = mkOption {
@@ -337,11 +339,16 @@ in {
       defaultText = "pkgs.grafana";
       type = types.package;
     };
+
     declarativePlugins = mkOption {
       type = with types; nullOr (listOf path);
       default = null;
       description = "If non-null, then a list of packages containing Grafana plugins to install. If set, plugins cannot be manually installed.";
       example = literalExample "with pkgs.grafanaPlugins; [ grafana-piechart-panel ]";
+      # Make sure each plugin is added only once; otherwise building
+      # the link farm fails, since the same path is added multiple
+      # times.
+      apply = x: if isList x then lib.unique x else x;
     };
 
     dataDir = mkOption {
@@ -630,25 +637,33 @@ in {
     systemd.services.grafana = {
       description = "Grafana Service Daemon";
       wantedBy = ["multi-user.target"];
-      after = ["networking.target"];
+      after = ["networking.target"] ++ lib.optional usePostgresql "postgresql.service" ++ lib.optional useMysql "mysql.service";
       environment = {
         QT_QPA_PLATFORM = "offscreen";
       } // mapAttrs' (n: v: nameValuePair "GF_${n}" (toString v)) envOptions;
       script = ''
+        set -o errexit -o pipefail -o nounset -o errtrace
+        shopt -s inherit_errexit
+
         ${optionalString (cfg.auth.google.clientSecretFile != null) ''
-          export GF_AUTH_GOOGLE_CLIENT_SECRET="$(cat ${escapeShellArg cfg.auth.google.clientSecretFile})"
+          GF_AUTH_GOOGLE_CLIENT_SECRET="$(<${escapeShellArg cfg.auth.google.clientSecretFile})"
+          export GF_AUTH_GOOGLE_CLIENT_SECRET
         ''}
         ${optionalString (cfg.database.passwordFile != null) ''
-          export GF_DATABASE_PASSWORD="$(cat ${escapeShellArg cfg.database.passwordFile})"
+          GF_DATABASE_PASSWORD="$(<${escapeShellArg cfg.database.passwordFile})"
+          export GF_DATABASE_PASSWORD
         ''}
         ${optionalString (cfg.security.adminPasswordFile != null) ''
-          export GF_SECURITY_ADMIN_PASSWORD="$(cat ${escapeShellArg cfg.security.adminPasswordFile})"
+          GF_SECURITY_ADMIN_PASSWORD="$(<${escapeShellArg cfg.security.adminPasswordFile})"
+          export GF_SECURITY_ADMIN_PASSWORD
         ''}
         ${optionalString (cfg.security.secretKeyFile != null) ''
-          export GF_SECURITY_SECRET_KEY="$(cat ${escapeShellArg cfg.security.secretKeyFile})"
+          GF_SECURITY_SECRET_KEY="$(<${escapeShellArg cfg.security.secretKeyFile})"
+          export GF_SECURITY_SECRET_KEY
         ''}
         ${optionalString (cfg.smtp.passwordFile != null) ''
-          export GF_SMTP_PASSWORD="$(cat ${escapeShellArg cfg.smtp.passwordFile})"
+          GF_SMTP_PASSWORD="$(<${escapeShellArg cfg.smtp.passwordFile})"
+          export GF_SMTP_PASSWORD
         ''}
         ${optionalString cfg.provision.enable ''
           export GF_PATHS_PROVISIONING=${provisionConfDir};

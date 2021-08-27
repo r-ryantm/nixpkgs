@@ -12,16 +12,18 @@
 
 buildPythonPackage rec {
   pname = "pytest-sanic";
-  version = "1.7.1";
+  version = "1.8.1";
 
   src = fetchFromGitHub {
     owner = "yunstanford";
     repo = pname;
     rev = "v${version}";
-    sha256 = "sha256-OtyulpSHUWERtcIRT5j3YtHciIxFiIFYKqtlEd1NSFw=";
+    sha256 = "128qxpqilqjhpjzjzzfzsgi4bc0vxwmz0k3xwry6fwhyzcf2bzl5";
   };
 
-  buildInputs = [ pytest ];
+  buildInputs = [
+    pytest
+  ];
 
   propagatedBuildInputs = [
     aiohttp
@@ -35,6 +37,12 @@ buildPythonPackage rec {
     sanic
     pytestCheckHook
   ];
+
+  postPatch = ''
+    # https://github.com/yunstanford/pytest-sanic/issues/55
+    substituteInPlace setup.py \
+      --replace "websockets>=8.1,<9.0" "websockets>=9.1,<10.0"
+  '';
 
   disabledTests = [
     # https://github.com/yunstanford/pytest-sanic/issues/51

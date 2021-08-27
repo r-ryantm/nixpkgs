@@ -1,8 +1,10 @@
 { self, callPackage }:
 callPackage ./default.nix {
   inherit self;
-  version = "2.1.0-2021-05-22";
-  rev = "5783ba1bf73c53ca56e64ed0c462c62224f0393c";
+  owner = "LuaJIT";
+  repo = "LuaJIT";
+  version = "2.1.0-2021-06-25";
+  rev = "e957737650e060d5bf1c2909b741cc3dffe073ac";
   isStable = false;
-  sha256 = "1j25xnbradks58lwsqnxcc7k29wsk2hnky0b1vjzpadrj0sxxc42";
+  sha256 = "04i7n5xdd1nci4mv2p6bv71fq5b1nkswz12hcgirsxqbnkrlbbcj";
 }

@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, rustPlatform, CoreServices, cmake, fetchpatch
+{ lib, stdenv, fetchFromGitHub, rustPlatform, CoreServices, cmake
 , libiconv
 , useMimalloc ? false
 , doCheck ? true
@@ -6,35 +6,26 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "rust-analyzer-unwrapped";
-  version = "2021-05-17";
-  cargoSha256 = "sha256-uSBukInJ3FEMmMpG9DN3XeXm+hzUFqCrZORb4NIEJhw=";
+  version = "2021-08-23";
+  cargoSha256 = "sha256-FMOLYR8cyimAA71SlxcT370wpeNH4f8vwv+oAhUd8zc=";
 
   src = fetchFromGitHub {
     owner = "rust-analyzer";
     repo = "rust-analyzer";
     rev = version;
-    sha256 = "sha256-BsabpY4LArfsDPAMsggxKu1+OQZmqRe//+a5uBcuFps=";
+    sha256 = "sha256-6Tbgy77Essi3Hyd5kdJ7JJbx7RuFZQWURfRrpScvPPQ=";
   };
 
   patches = [
-    # Revert updates which require rust 1.52.0.
-    # We currently have rust 1.51.0 in nixpkgs.
-    # https://github.com/rust-analyzer/rust-analyzer/pull/8718
-    (fetchpatch {
-      url = "https://github.com/rust-analyzer/rust-analyzer/pull/8718/commits/607d8a2f61e56fabb7a3bc5132592917fcdca970.patch";
-      sha256 = "sha256-g1yyq/XSwGxftnqSW1bR5UeMW4gW28f4JciGvwQ/n08=";
-      revert = true;
-    })
-    (fetchpatch {
-      url = "https://github.com/rust-analyzer/rust-analyzer/pull/8718/commits/6a16ec52aa0d91945577c99cdf421b303b59301e.patch";
-      sha256 = "sha256-n7Ew/0fG8zPaMFCi8FVLjQZwJSaczI/QoehC6pDLrAk=";
-      revert = true;
-    })
+    # Code format and git history check require more dependencies but don't really matter for packaging.
+    # So just ignore them.
+    ./ignore-git-and-rustfmt-tests.patch
   ];
 
   buildAndTestSubdir = "crates/rust-analyzer";
 
   cargoBuildFlags = lib.optional useMimalloc "--features=mimalloc";
+  cargoTestFlags = lib.optional useMimalloc "--features=mimalloc";
 
   nativeBuildInputs = lib.optional useMimalloc cmake;
 
