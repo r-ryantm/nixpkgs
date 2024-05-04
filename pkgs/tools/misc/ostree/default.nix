@@ -52,7 +52,19 @@ in stdenv.mkDerivation rec {
     sha256 = "sha256-Y8kZCCEzOsc3Pg2SPkwnZrJevc/fTvtEy1koxlidn8s=";
   };
 
-  patches = lib.optionals stdenv.hostPlatform.isMusl [
+  patches = [
+    # Workarounds for installed tests failing in pseudoterminal
+    # https://github.com/ostreedev/ostree/issues/1592
+    ./fix-1592.patch
+
+    # Hard-code paths in installed tests
+    (substituteAll {
+      src = ./fix-test-paths.patch;
+      python3 = testPython.interpreter;
+      openssl = "${openssl}/bin/openssl";
+    })
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isMusl [
     # > I guess my inclination here is to recommend that musl users
     # > carry a downstream patch to revert the commits in #3175 until
     # > such time as they can update to the new musl.
