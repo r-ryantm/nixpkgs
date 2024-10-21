@@ -8,7 +8,10 @@
   torch,
   requests,
   setuptools,
+  openai,
+  pyaudio,
   soundfile,
+  openai-whisper,
   typing-extensions,
 }:
 
@@ -17,7 +20,7 @@ buildPythonPackage rec {
   version = "3.11.0";
   pyproject = true;
 
-  disabled = pythonOlder "3.8";
+  disabled = pythonOlder "3.9";
 
   src = fetchFromGitHub {
     owner = "Uberi";
@@ -33,12 +36,20 @@ buildPythonPackage rec {
     typing-extensions
   ];
 
+  optional-dependencies = {
+    audio = [ pyaudio ];
+    whisper-local = [
+      openai-whisper
+      soundfile
+    ];
+    whisper-api = [ openai ];
+  };
+
   nativeCheckInputs = [
     numpy
     pytestCheckHook
     torch
-    soundfile
-  ];
+  ] ++ lib.flatten (builtins.attrValues optional-dependencies);
 
   pythonImportsCheck = [ "speech_recognition" ];
 
