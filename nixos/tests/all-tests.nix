@@ -564,6 +564,7 @@ in
     imports = [ ./firefox.nix ];
     _module.args.firefoxPackage = pkgs.firefox-devedition;
   };
+  firefox_decrypt = runTest ./firefox_decrypt.nix;
   firefox-esr = runTest {
     # used in `tested` job
     imports = [ ./firefox.nix ];
