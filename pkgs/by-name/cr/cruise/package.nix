@@ -23,7 +23,7 @@ buildGoModule (finalAttrs: {
   meta = {
     description = "TUI for managing Docker containers, images, volumes, networks, and more";
     homepage = "https://github.com/NucleoFusion/cruise";
-    license = lib.licenses.mit;
+    license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ greatnatedev ];
     mainProgram = "cruise";
     platforms = lib.platforms.linux;
