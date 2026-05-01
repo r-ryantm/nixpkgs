@@ -5,8 +5,6 @@
   setuptools,
   cryptography,
   python-dateutil,
-  six,
-  pbr,
   coverage,
   oslotest,
   stestr,
@@ -36,8 +34,6 @@ buildPythonPackage rec {
   dependencies = [
     cryptography
     python-dateutil
-    six
-    pbr
   ];
 
   pythonImportsCheck = [ "pyghmi" ];
