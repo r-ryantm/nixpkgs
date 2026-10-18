@@ -28,7 +28,7 @@ stdenv.mkDerivation (finalAttrs: {
     url = "https://mixingstation.app/backend/api/web/download/archive/mixing-station-pc/update/${finalAttrs.version}";
     name = "mixing-station-${finalAttrs.version}.zip";
     extension = "zip";
-    hash = "sha256-RJoAesvJeU2YZxfTUypW6TaOO9qEYYZLBNgx3gU77us=";
+    hash = "sha256-gm71xN9UnyGmkR7/fCMEh+vf4IMDqduyBysihVpQfu8=";
     stripRoot = false;
   };
 
